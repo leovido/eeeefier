@@ -99,6 +99,89 @@ const translatorMapping: { [key: string]: string } = {
 
 
 app.frame('/', (c) => {
+  const { buttonValue, inputText, status, deriveState } = c
+
+  const state = deriveState(previousState => {
+    if (buttonValue === 'eeee') {
+      // @ts-ignore
+      previousState.translatedText = inputText?.toLowerCase().split('').map((char) => {
+        if (char === ' ') return 'EeEeEe';
+        return translatorMapping[char] || char;
+      }).join(' ');
+    }
+  })
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: 'center',
+          background: 'linear-gradient(135deg, #1E90FF, #20B2AA)',
+          backgroundSize: '100% 100%',
+          fontFamily: 'Inter',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          justifyContent: 'flex-start',
+          textAlign: 'center',
+          width: '100%',
+          paddingTop: '20px',
+        }}
+      >
+        <h1
+          style={{
+            color: 'white',
+            fontFamily: 'Inter',
+            background: '#222222',
+            fontSize: '60',
+            padding: '10px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            fontWeight: 'bold',
+            margin: '0',
+          }}
+        >
+          🐬 EEeefier 🐬
+        </h1>
+        <h2
+          style={{
+            color: 'white',
+            fontFamily: 'Inter',
+            fontSize: '40',
+            margin: '0 0 30px',
+          }}
+        >
+          Convert any text to EEee
+        </h2>
+        <div
+          style={{
+            color: '#FFD700',
+            fontSize: status === 'response' ? 50 : 60,
+            fontStyle: 'normal',
+            letterSpacing: '-0.025em',
+            lineHeight: 1.4,
+            padding: '0 120px',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {status === 'response'
+                // @ts-ignore
+            ? `${state.translatedText}`
+            : 'Welcome! Eeefy your text!'}
+        </div>
+      </div>
+    ),
+    intents: [
+      <TextInput placeholder="Input your text to eeeefy!" />,
+      <Button value="translate" action="/translate">EEeefy!</Button>,
+      // @ts-ignore
+      <Button.Link href={share(state?.translatedText ?? "")}>Share</Button.Link>,
+      <Button.Reset>Reset</Button.Reset>,
+    ],
+  })
+})
+
+app.frame('/translate', (c) => {
   const { buttonValue, inputText, status, deriveState, verified } = c
 
   if (!verified) {
@@ -184,6 +267,7 @@ app.frame('/', (c) => {
     ],
   })
 })
+
 
 devtools(app, { serveStatic })
 
