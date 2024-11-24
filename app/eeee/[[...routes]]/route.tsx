@@ -182,20 +182,18 @@ app.frame('/', (c) => {
 })
 
 app.frame('/translate', (c) => {
-  const { buttonValue, inputText, status, deriveState, verified } = c
+  const { inputText, status, deriveState, verified } = c
 
   if (!verified) {
     return c.error(new Error('Frame not verified'))
   }
 
   const state = deriveState(previousState => {
-    if (buttonValue === 'eeee') {
-      // @ts-ignore
-      previousState.translatedText = inputText?.toLowerCase().split('').map((char) => {
+    // @ts-ignore
+    previousState.translatedText = inputText?.toLowerCase().split('').map((char) => {
         if (char === ' ') return 'EeEeEe';
         return translatorMapping[char] || char;
       }).join(' ');
-    }
   })
 
   return c.res({
