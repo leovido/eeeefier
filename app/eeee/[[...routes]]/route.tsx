@@ -95,6 +95,7 @@ app.frame('/', (c) => {
 
   const state = deriveState(previousState => {
     if (buttonValue === 'eeee') {
+      // @ts-ignore
       previousState.translatedText = inputText?.split('').map((char) => {
         if (char === ' ') return 'EeEeEe';
         return translatorMapping[char] || char;
@@ -156,6 +157,7 @@ app.frame('/', (c) => {
           }}
         >
           {status === 'response'
+                // @ts-ignore
             ? `${state.translatedText}`
             : 'Welcome! Eeefy your text!'}
         </div>
@@ -164,6 +166,7 @@ app.frame('/', (c) => {
     intents: [
       <TextInput placeholder="Input your text to eeeefy!" />,
       <Button value="eeee">EEeefy!</Button>,
+      // @ts-ignore
       <Button.Link href={share(state?.translatedText ?? "")}>Share</Button.Link>,
       <Button.Reset>Reset</Button.Reset>,
     ],
