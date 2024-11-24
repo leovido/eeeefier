@@ -29,6 +29,14 @@ const app = new Frog({
   initialState: {
     translatedText: '',
   },
+  hub: {
+    apiUrl: "https://hubs.airstack.xyz",
+    fetchOptions: {
+      headers: {
+        "x-airstack-hubs": process.env.AIRSTACK_API_KEY || "",
+      },
+    },
+  },
 })
 
 // Uncomment to use Edge Runtime
@@ -93,10 +101,14 @@ const translatorMapping: { [key: string]: string } = {
 app.frame('/', (c) => {
   const { buttonValue, inputText, status, deriveState, verified } = c
 
+  if (!verified) {
+    return c.error(new Error('Frame not verified'))
+  }
+
   const state = deriveState(previousState => {
     if (buttonValue === 'eeee') {
       // @ts-ignore
-      previousState.translatedText = inputText?.split('').map((char) => {
+      previousState.translatedText = inputText?.toLowerCase().split('').map((char) => {
         if (char === ' ') return 'EeEeEe';
         return translatorMapping[char] || char;
       }).join(' ');
