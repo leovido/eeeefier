@@ -13,7 +13,7 @@ const share = (text: string) => {
   const prefix = "https://warpcast.com/~/compose?text=";
   const encoded = encodeURIComponent(text);
   const urlEncoded = encodeURIComponent(
-    `https://eeeefier.leovido.xyz/eeee`
+    `https://eeefier.leovido.xyz/eeee`
   );
   const suffix = `&embeds[]=${urlEncoded}`;
   const url = `${prefix}${encoded}${suffix}`;
