@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 const share = (text: string) => {
   const prefix = "https://warpcast.com/~/compose?text=";
-  const encoded = encodeURIComponent(text);
+  const encoded = encodeURIComponent(text + "\n\n frame by @leovido.eth");
   const urlEncoded = encodeURIComponent(
     `https://eeefier.leovido.xyz/eeee`
   );
@@ -169,6 +169,16 @@ app.frame('/', (c) => {
             ? `${state.translatedText}`
             : 'Welcome! Eeefy your text!'}
         </div>
+        <div
+          style={{
+            color: '#FFD700',
+            fontSize: 30,
+            fontStyle: 'normal',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          by @leovido.eth
+        </div>
       </div>
     ),
     intents: [
@@ -253,6 +263,16 @@ app.frame('/translate', (c) => {
                 // @ts-ignore
             ? `${state.translatedText}`
             : 'Welcome! Eeefy your text!'}
+        </div>
+        <div
+          style={{
+            color: '#FFD700',
+            fontSize: 30,
+            fontStyle: 'normal',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          by @leovido.eth
         </div>
       </div>
     ),
